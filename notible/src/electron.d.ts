@@ -2,7 +2,7 @@ export {};
 
 declare global {
   interface Window {
-    electron: {
+    electronAPI: {
       storeTextLocally: (text: string) => void;
     };
   }
