@@ -7,7 +7,7 @@ type SideButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>
 const SideButton = ({ children, src,  ...props }: SideButtonProps) => {
     return(
         <button 
-            className={`w-25 h-25 bg-amber-300`} 
+            className={`w-25 h-25 bg-gray-100`} 
             {...props}
         >
             {src && <img src={src}/>}
