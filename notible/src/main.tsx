@@ -5,6 +5,9 @@ import App from './App.tsx'
 import Revise from './screens/Revise.tsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+//const fs = require("fs");
+//const path = require("path")
+
 const router = createBrowserRouter([
     {   
         path: "/",
@@ -15,6 +18,8 @@ const router = createBrowserRouter([
         element: <Revise />
     }
 ]);
+
+
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
