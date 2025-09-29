@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+import './index.css';
 import Loading from './components/Loading.tsx';
 import NoteCard from './components/NoteCard.tsx';
 
@@ -56,9 +56,8 @@ const App = () => {
         <div className="absolute top-0 left-0 flex flex-col justify-center items-center w-screen h-screen bg-neutralDarkest"       style={{
         overflowY: "scroll",
         padding: "10px",
-      }}>
-
-            <h1 className='font-bebas p-10 text-center text-neutralOffWhite'>Notible</h1>
+        }}>
+            <h1 className='font-serif text-4xl mt-10 p-10 text-center text-neutralOffWhite'>Notible</h1>
             <div className='flex justify-center'>
                 <textarea
                     value={text}
@@ -76,14 +75,12 @@ const App = () => {
                     className='w-150 h-150 p-3 border-3 rounded-3xl resize-none text-2xl border-neutral text-neutralOffWhite focus:border-neutralLight outline-none'                
                 />
             </div>
-            {/*<button className='w-150 h-25 mt-10 rounded-3xl bg-gray-700 outline-none'>
-            </button>*/}
-            <div className = 'w-400 h-50 mt-10 rounded-3xl bg-neutralDark'>
+            <div className = 'w-310 h-600 mt-10 rounded-3xl bg-neutralDark'>
                 <ul>
                     {isLoading?(
                         <Loading />
                     ) : (
-                        <ul className='p-5 gap-5'>
+                        <ul className='grid grid-cols-5 p-10 gap-10'>
                             {notesList.map((note: any) => (
                                 <NoteCard note={{
                                     noteTitle: note.title,
