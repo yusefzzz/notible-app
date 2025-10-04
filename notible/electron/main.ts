@@ -12,7 +12,9 @@ async function loadNotes() {
     try{
         if (fs.existsSync(userDataPath)) {
             const notes = await fs.promises.readFile(userDataPath, 'utf-8');
-            return JSON.parse(notes);
+            //console.log("These are the notes: " + notes)
+            if (notes) return JSON.parse(notes);
+            return []
         }
         return [];
     } catch (error) {
@@ -23,7 +25,7 @@ async function loadNotes() {
 async function saveNewNote(newNote: any){
     try{
         const olderNotes = await loadNotes();
-        console.log(olderNotes);
+        //console.log("Fetches notes: " + olderNotes);
         olderNotes.push(newNote);
         await fs.promises.writeFile(userDataPath, JSON.stringify(olderNotes));
         console.log("New note saved");
@@ -31,6 +33,11 @@ async function saveNewNote(newNote: any){
         console.log(error);
     }
 
+}
+
+async function updateNotes(notes: any){
+    await fs.promises.writeFile(userDataPath, JSON.stringify(notes))
+    console.log("Notes updated");
 }
 
 // Let React talk to loadNotes() and saveNewNote() through IPC
@@ -43,7 +50,7 @@ ipcMain.handle('save-new-note', async (event, newNote) => {
 
 // App and window setup
 function createWindow() {
-    console.log("Preload path resolved to:", path.join(__dirname, "preload.js"));
+    //console.log("Preload path resolved to:", path.join(__dirname, "preload.js"));
 
     const mainWindow = new BrowserWindow({
         width: 800,
