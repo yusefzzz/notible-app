@@ -68,8 +68,7 @@ const App = () => {
         setNoteIndex(-1);
     }
 
-    const saveNote = async () => {
-        console.log("Save note");
+    const updateNote = async () => {
         const notes: any = notesList;
         const currentNote: any = notes[noteIndex];
         const updatedNote = {
@@ -86,7 +85,7 @@ const App = () => {
         } catch (error) {
             console.log("ERROR OCCURRED WHILE UPDATING NOTES: " + error)
         }
-        
+        closeNote()
     }
 
     useEffect(() => {
@@ -118,7 +117,7 @@ const App = () => {
                 <div className='flex w-150 h-10 justify-end'>
                     {isNoteOpen && <SmallButton label='Close' onPressed={() => closeNote()}/>}
                     <div className='p-1'></div>
-                    {isNoteOpen && <SmallButton label='Save' onPressed={() => saveNote()}/>}
+                    {isNoteOpen && <SmallButton label='Save' onPressed={() => updateNote()}/>}
 
                 </div>
             </div>
