@@ -40,13 +40,16 @@ async function updateNotes(notes: any){
     console.log("Notes updated");
 }
 
-// Let React talk to loadNotes() and saveNewNote() through IPC
+// Let React talk to loadNotes(), saveNewNote(), etc through IPC
 
 ipcMain.handle('load-notes', loadNotes);
 ipcMain.handle('save-new-note', async (event, newNote) => {
     await saveNewNote(newNote);
     return newNote;
 });
+ipcMain.handle('update-notes', async (event, notes) => {
+    await updateNotes(notes);
+})
 
 // App and window setup
 function createWindow() {

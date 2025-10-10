@@ -14,12 +14,12 @@ type NoteCardProps = {
 const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen }) => {
     const {title, date, content, isPrivate} = note;
     return (
-        <div className='flex flex-col h-55 w-55 p-5 rounded-3xl text-neutralOffWhite bg-neutralDarkest'>
+        <div className='flex flex-col h-55 w-55 p-5 rounded-3xl text-neutralOffWhite bg-neutralDark'>
             <div className='flex'>
                 <h1 className='text-2xl w-30'>
                     {date}
                 </h1>
-                <button className='h-10 w-10 ml-5 text-1xl rounded-2xl hover:bg-neutralDark'
+                <button className='h-10 w-10 ml-5 text-1xl rounded-2xl hover:bg-neutralDarkest'
                 onClick={() => onOpen(0)}
                 >
 
