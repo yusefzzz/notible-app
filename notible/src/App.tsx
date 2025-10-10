@@ -48,7 +48,7 @@ const App = () => {
         try {
             await window.electronAPI.saveNewNote(note);
             console.log("Note saved!");
-            await fetchNotes();
+            fetchNotes();
         } catch (error) {
             console.log("ERROR OCCURRED WHILE SAVING NEW NOTE: " + error);
         }
@@ -57,7 +57,7 @@ const App = () => {
     const openNote = (index: number) => {
         window.scrollTo({top: 0, behavior: 'smooth'});
         const currentNote: any = notesList[index];
-        setText(currentNote.content)
+        setText(currentNote.content);
         setIsNoteOpen(true);
         setNoteIndex(index);
     }
@@ -79,9 +79,9 @@ const App = () => {
         };
         notes[noteIndex] = updatedNote;
         try {
-            await window.electronAPI.updateNotes(notes);
+            await window.electronAPI.updateNote(notes.reverse());
             console.log('Notes updated');
-            await fetchNotes();
+            fetchNotes();
         } catch (error) {
             console.log("ERROR OCCURRED WHILE UPDATING NOTES: " + error)
         }
@@ -103,14 +103,15 @@ const App = () => {
                     onChange={(e) => {
                         setText(e.target.value)
                     }}
-                    onKeyDown={(e) => {
+                    onKeyDown={async (e) => {
                         if (e.key === "Enter" && !e.shiftKey){
+                            e.preventDefault();
                             if (!isNoteOpen){
-                                e.preventDefault();
                                 addNote(text);
-                                fetchNotes();
-                                setText("");
+                            } else if (isNoteOpen){
+                                updateNote()
                             }
+                            setText("");
                         }
                     }}
                 />
@@ -118,10 +119,9 @@ const App = () => {
                     {isNoteOpen && <SmallButton label='Close' onPressed={() => closeNote()}/>}
                     <div className='p-1'></div>
                     {isNoteOpen && <SmallButton label='Save' onPressed={() => updateNote()}/>}
-
                 </div>
             </div>
-            <h1 className='flex text-3xl mb-10 text-neutralOffWhite'>
+            <h1 className='flex text-3xl mb-10 mt-5 text-neutralOffWhite'>
                 My Notes
             </h1>
             <div className = 'w-310 h-100 mb-20 rounded-3xl border-3 border-neutral bg-neutralDarkest overflow-y-auto pr-3'>
