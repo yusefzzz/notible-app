@@ -85,7 +85,6 @@ const App = () => {
         } catch (error) {
             console.log("ERROR OCCURRED WHILE UPDATING NOTES: " + error)
         }
-        closeNote()
     }
 
     useEffect(() => {
@@ -108,10 +107,10 @@ const App = () => {
                             e.preventDefault();
                             if (!isNoteOpen){
                                 addNote(text);
+                                setText("");
                             } else if (isNoteOpen){
                                 updateNote()
                             }
-                            setText("");
                         }
                     }}
                 />
