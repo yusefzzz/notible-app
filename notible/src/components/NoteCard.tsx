@@ -1,4 +1,5 @@
 import React from 'react';
+import options from '../assets/react.svg';
 
 type Note = {
     title: string,
@@ -20,9 +21,9 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen }) => {
                     {date}
                 </h1>
                 <button className='h-10 w-10 ml-5 text-1xl rounded-2xl hover:bg-neutralDarkest'
-                onClick={() => onOpen(0)}
+                onClick={() => onOpen(-1)}
                 >
-
+                    <img src={options} />
                 </button>
             </div>
             <h2 className='text-1xl mt-3 line-clamp-3'>

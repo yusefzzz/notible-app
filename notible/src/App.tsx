@@ -79,12 +79,26 @@ const App = () => {
         };
         notes[noteIndex] = updatedNote;
         try {
-            await window.electronAPI.updateNote(notes.reverse());
-            console.log('Notes updated');
+            await window.electronAPI.updateNotes(notes.reverse());
+            console.log('Notes updated: note changed');
             fetchNotes();
         } catch (error) {
-            console.log("ERROR OCCURRED WHILE UPDATING NOTES: " + error)
+            console.log("ERROR OCCURRED WHILE UPDATING NOTES (update note): " + error);
         }
+    }
+
+    const deleteNote = async () => {
+        const notes: any = notesList;
+        notes.splice(noteIndex, 1);
+        try {
+            await window.electronAPI.updateNotes(notes.reverse());
+            console.log('Notes updated: note deleted');
+            closeNote();
+            fetchNotes();
+        } catch (error) {
+            console.log("ERROR OCCURRED WHILE UPDATING NOTES (delete note): " + error);
+        }
+
     }
 
     useEffect(() => {
@@ -114,13 +128,15 @@ const App = () => {
                         }
                     }}
                 />
-                <div className='flex w-150 h-10 justify-end'>
+                <div className='flex w-150 h-10 mt-2 justify-end'>
+                    {isNoteOpen && <SmallButton label='Delete' onPressed={() => deleteNote()}/>}
+                    <div className='p-1'></div>
                     {isNoteOpen && <SmallButton label='Close' onPressed={() => closeNote()}/>}
                     <div className='p-1'></div>
                     {isNoteOpen && <SmallButton label='Save' onPressed={() => updateNote()}/>}
                 </div>
             </div>
-            <h1 className='flex text-3xl mb-10 mt-5 text-neutralOffWhite'>
+            <h1 className='flex text-3xl mb-10 mt-10 text-neutralOffWhite'>
                 My Notes
             </h1>
             <div className = 'w-310 h-100 mb-20 rounded-3xl border-3 border-neutral bg-neutralDarkest overflow-y-auto pr-3'>

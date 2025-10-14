@@ -35,7 +35,7 @@ async function saveNewNote(newNote: any){
 
 }
 
-async function updateNote(notes: any){
+async function updateNotes(notes: any){
     try {    
         await fs.promises.writeFile(userDataPath, JSON.stringify(notes))
         console.log("Notes updated");
@@ -51,10 +51,8 @@ ipcMain.handle('save-new-note', async (event, newNote) => {
     await saveNewNote(newNote);
     return newNote;
 });
-console.log("Bluebluebn");
-ipcMain.handle('update-note', async (event, notes) => {
-    console.log("YESYESYES");
-    await updateNote(notes);
+ipcMain.handle('update-notes', async (event, notes) => {
+    await updateNotes(notes);
     return notes;
 });
 console.log('Registered IPC channels:', ipcMain.eventNames());

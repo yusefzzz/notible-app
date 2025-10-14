@@ -3,7 +3,7 @@ declare global {
         electronAPI: {
             loadNotes: () => Promise<any>;
             saveNewNote: (newNote: any) => Promise<any>;
-            updateNote: (notes: any) => Promise<any>;
+            updateNotes: (notes: any) => Promise<any>;
         }
     }
 }
