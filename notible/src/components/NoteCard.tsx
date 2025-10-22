@@ -1,5 +1,7 @@
 import React from 'react';
-import options from '../assets/react.svg';
+//import { ReactComponent as OptionsSvg } from '../assets/ellipsis-vertical.svg?react';
+import options from '../assets/ellipsis-vertical.svg';
+import { EllipsisVertical } from 'lucide-react';
 
 type Note = {
     title: string,
@@ -20,10 +22,10 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen }) => {
                 <h1 className='text-2xl w-30'>
                     {date}
                 </h1>
-                <button className='h-10 w-10 ml-5 text-1xl rounded-2xl hover:bg-neutralDarkest'
+                <button className='flex items-center justify-center h-10 w-10 ml-5 text-1xl rounded-2xl hover:bg-neutralDarkest'
                 onClick={() => onOpen(-1)}
                 >
-                    <img src={options} />
+                    <EllipsisVertical />
                 </button>
             </div>
             <h2 className='text-1xl mt-3 line-clamp-3'>
