@@ -3,7 +3,7 @@ import './index.css';
 import Loading from './components/Loading.tsx';
 import NoteCard from './components/NoteCard.tsx';
 import SmallButton from './components/SmallButton.tsx';
-import { div } from 'framer-motion/client';
+import { button, div } from 'framer-motion/client';
 
 ////import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 //import reactLogo from './assets/react.svg'
@@ -143,24 +143,29 @@ const App = () => {
                 {isLoading?(
                     <Loading />
                 ) : (
-                    <div className='grid grid-cols-5 p-10 gap-5 '>
-                        {
-                        notesList? (
-                            notesList.map((note: any, i: number) => (
-                                <NoteCard key={i} note={{
-                                    title: note.title,
-                                    date: note.date,
-                                    content: note.content,
-                                    isPrivate: note.private,
-                                }
-                            } onOpen={() => openNote(i)}/>
-                            ))
-                        ) : (
-                            <p className='text-2xl font-serif text-neutralLight'>No notes yet</p>
-                        )    
-                        
-                        }
-                    </div>
+                    <>
+                        <div className='ml-10 mt-10'>
+                            <SmallButton label='Create folder' onPressed={() => updateNote()}/>
+                        </div>
+                        <div className='grid grid-cols-5 p-10 gap-5'>
+                            {
+                            notesList? (
+                                notesList.map((note: any, i: number) => (
+                                    <NoteCard key={i} note={{
+                                        title: note.title,
+                                        date: note.date,
+                                        content: note.content,
+                                        isPrivate: note.private,
+                                    }
+                                } onOpen={() => openNote(i)}/>
+                                ))
+                            ) : (
+                                <p className='text-2xl font-serif text-neutralLight'>No notes yet</p>
+                            )    
+                            
+                            }
+                        </div>
+                    </>
                 )}
             </div>
         </div>
