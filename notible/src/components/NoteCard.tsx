@@ -3,12 +3,17 @@ import React from 'react';
 import options from '../assets/ellipsis-vertical.svg';
 import { EllipsisVertical } from 'lucide-react';
 
-type Note = {
+export type Note = {
+    noteID: number,
     title: string,
     date: string,
     content: string,
     isPrivate: boolean
 }
+
+/*export class Note {
+    private
+}*/
 
 type NoteCardProps = {
     note: Note;
@@ -22,7 +27,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen }) => {
                 <h1 className='text-2xl w-30'>
                     {date}
                 </h1>
-                <button className='flex items-center justify-center h-10 w-10 ml-5 text-1xl rounded-2xl hover:bg-neutralDarkest'
+                <button className='flex items-center justify-center h-10 w-10 ml-5 text-1xl rounded-2xl hover:bg-neutralDarkest focus:outline-neutral focus:neutralDark'
                 onClick={() => onOpen(-1)}
                 >
                     <EllipsisVertical />

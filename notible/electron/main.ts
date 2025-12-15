@@ -35,6 +35,19 @@ async function saveNewNote(newNote: any){
 
 }
 
+/*async function createFolder(title: string, dir: string){
+    try{
+        //const olderNotes = await loadNotes();
+        //console.log("Fetches notes: " + olderNotes);
+        //olderNotes.push(newNote);
+        await fs.promises.mkdir(dir, )
+        console.log("New note saved");
+    } catch (error) {
+        console.log(error);
+    }
+
+}*/
+
 async function updateNotes(notes: any){
     try {    
         await fs.promises.writeFile(userDataPath, JSON.stringify(notes))
