@@ -18,6 +18,8 @@ const App = () => {
 
     const [text, setText] = useState("");
     const [notesList, setNotesList] = useState([]);
+    const [foldersList, setFoldersList] = useState([]);
+    const [filesList, setFilesList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isNoteOpen, setIsNoteOpen] = useState(false);
     const [noteIndex, setNoteIndex] = useState(-1);
@@ -35,6 +37,14 @@ const App = () => {
             console.log("ERROR OCCURRED WHILE FETCHING NOTES: " + error);
         }
         setIsLoading(false);
+    }
+
+    const fetchFolders = async () => {
+        console.log("fetch folders")
+    }
+
+    const fetchFiles = async () => {
+        console.log("fetch files")
     }
 
     const addNote =  async (text: string) => {
@@ -101,6 +111,11 @@ const App = () => {
 
     }
 
+    const createFolder = async () => {
+        console.log("Create folder")
+        
+    }
+
     useEffect(() => {
         fetchNotes();
     }, []);
@@ -145,7 +160,7 @@ const App = () => {
                 ) : (
                     <>
                         <div className='ml-10 mt-10'>
-                            <SmallButton label='Create folder' onPressed={() => updateNote()}/>
+                            <SmallButton label='Create folder' onPressed={() => createFolder()}/>
                         </div>
                         <div className='grid grid-cols-5 p-10 gap-5'>
                             {

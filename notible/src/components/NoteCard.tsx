@@ -4,7 +4,7 @@ import options from '../assets/ellipsis-vertical.svg';
 import { EllipsisVertical } from 'lucide-react';
 
 export type Note = {
-    noteID: number,
+    //noteID: number,
     title: string,
     date: string,
     content: string,

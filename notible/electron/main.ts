@@ -35,18 +35,16 @@ async function saveNewNote(newNote: any){
 
 }
 
-/*async function createFolder(title: string, dir: string){
+async function createFolder(title: string){//, dir: string){
     try{
-        //const olderNotes = await loadNotes();
-        //console.log("Fetches notes: " + olderNotes);
-        //olderNotes.push(newNote);
-        await fs.promises.mkdir(dir, )
-        console.log("New note saved");
+        const folderPath = path.join(__dirname, title);
+        await fs.promises.mkdir(folderPath, { recursive: true });
+        console.log("New folder created");
     } catch (error) {
         console.log(error);
     }
 
-}*/
+}
 
 async function updateNotes(notes: any){
     try {    
