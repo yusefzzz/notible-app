@@ -7,6 +7,7 @@ export type Note = {
     //noteID: number,
     title: string,
     date: string,
+    path: string,
     content: string,
     isPrivate: boolean
 }
@@ -20,7 +21,7 @@ type NoteCardProps = {
     onOpen: (index: number) => void;
 }
 const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen }) => {
-    const {title, date, content, isPrivate} = note;
+    const {title, date, path, content, isPrivate} = note;
     return (
         <div className='flex flex-col h-55 w-55 p-5 rounded-3xl text-neutralOffWhite bg-neutralDark'>
             <div className='flex'>
