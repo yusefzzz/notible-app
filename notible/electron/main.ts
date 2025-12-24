@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { FolderNode, NoteNode, FileNode } from '../src/types/Types'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,6 +38,7 @@ async function saveNewNote(newNote: any){
 
 async function createFolder(title: string){//, dir: string){
     try{
+        //const folderr = FolderNode
         const folderPath = path.join(__dirname, title);
         await fs.promises.mkdir(folderPath, { recursive: true });
         console.log("New folder created");

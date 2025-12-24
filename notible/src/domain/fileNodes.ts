@@ -1,12 +1,12 @@
-type FolderNode = {
+export type FolderNode = {
     name: string;
     path: string;
     children: Array<FileNode>
 }
 
-type NoteNode = {
+export type NoteNode = {
     name: string;
     path: string;
 }
 
-type FileNode = FolderNode | NoteNode 
+export type FileNode = FolderNode | NoteNode 

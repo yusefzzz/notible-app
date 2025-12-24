@@ -18,6 +18,7 @@ const App = () => {
 
     const [text, setText] = useState("");
     const [notesList, setNotesList] = useState([]);
+    const [isCreatingFolder, setIsCreatingFolder] = useState(false);
     const [foldersList, setFoldersList] = useState([]);
     const [filesList, setFilesList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -116,6 +117,10 @@ const App = () => {
         
     }
 
+    const showFiles = async () => {
+
+    }
+
     useEffect(() => {
         fetchNotes();
     }, []);
@@ -164,6 +169,13 @@ const App = () => {
                         </div>
                         <div className='grid grid-cols-5 p-10 gap-5'>
                             {
+                                filesList? (
+                                    filesList.map
+                                ) : (
+
+                                )
+                            }
+                            {/*
                             notesList? (
                                 notesList.map((note: any, i: number) => (
                                     <NoteCard key={i} note={{
@@ -178,7 +190,7 @@ const App = () => {
                                 <p className='text-2xl font-serif text-neutralLight'>No notes yet</p>
                             )    
                             
-                            }
+                            */}
                         </div>
                     </>
                 )}
