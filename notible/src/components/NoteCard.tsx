@@ -2,22 +2,10 @@ import React from 'react';
 //import { ReactComponent as OptionsSvg } from '../assets/ellipsis-vertical.svg?react';
 import options from '../assets/ellipsis-vertical.svg';
 import { EllipsisVertical } from 'lucide-react';
-
-export type Note = {
-    //noteID: number,
-    title: string,
-    date: string,
-    path: string,
-    content: string,
-    isPrivate: boolean
-}
-
-/*export class Note {
-    private
-}*/
+import type { NoteItem } from '../domain/FileTypes'
 
 type NoteCardProps = {
-    note: Note;
+    note: NoteItem;
     onOpen: (index: number) => void;
 }
 const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen }) => {

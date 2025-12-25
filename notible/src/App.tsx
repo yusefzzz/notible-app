@@ -4,6 +4,7 @@ import Loading from './components/Loading.tsx';
 import NoteCard from './components/NoteCard.tsx';
 import SmallButton from './components/SmallButton.tsx';
 import { button, div } from 'framer-motion/client';
+import type { FileItem } from '../src/domain/FileTypes.ts'
 
 ////import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 //import reactLogo from './assets/react.svg'
@@ -20,7 +21,7 @@ const App = () => {
     const [notesList, setNotesList] = useState([]);
     const [isCreatingFolder, setIsCreatingFolder] = useState(false);
     const [foldersList, setFoldersList] = useState([]);
-    const [filesList, setFilesList] = useState([]);
+    const [filesList, setFilesList] = useState<FileItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isNoteOpen, setIsNoteOpen] = useState(false);
     const [noteIndex, setNoteIndex] = useState(-1);
@@ -120,6 +121,7 @@ const App = () => {
     const showFiles = async () => {
 
     }
+    
 
     useEffect(() => {
         fetchNotes();
@@ -168,13 +170,13 @@ const App = () => {
                             <SmallButton label='Create folder' onPressed={() => createFolder()}/>
                         </div>
                         <div className='grid grid-cols-5 p-10 gap-5'>
-                            {
+                            {/*
                                 filesList? (
                                     filesList.map
                                 ) : (
 
                                 )
-                            }
+                            */}
                             {/*
                             notesList? (
                                 notesList.map((note: any, i: number) => (

@@ -1,19 +1,9 @@
 import React from 'react';
-import type { Note } from "./NoteCard";   
 import { EllipsisVertical } from 'lucide-react';
-
-
-type Folder = {
-    //folderID: number,
-    title: string,
-    path: string,
-    children: File[]
-}
-
-type File = Folder | Note
+import type { FolderItem } from '../domain/FileTypes'
 
 type FolderCardProps = {
-    folder: Folder;
+    folder: FolderItem;
 }
 
 const FolderCard: React.FC<FolderCardProps> = ({ folder }) => {

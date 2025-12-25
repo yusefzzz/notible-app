@@ -2,7 +2,6 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import { FolderNode, NoteNode, FileNode } from '../src/types/Types'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,6 +35,16 @@ async function saveNewNote(newNote: any){
 
 }
 
+async function updateNotes(notes: any){
+    try {    
+        await fs.promises.writeFile(userDataPath, JSON.stringify(notes))
+        console.log("Notes updated");
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//NEW
 async function createFolder(title: string){//, dir: string){
     try{
         //const folderr = FolderNode
@@ -47,19 +56,15 @@ async function createFolder(title: string){//, dir: string){
     }
 
 }
-
-async function updateNotes(notes: any){
-    try {    
-        await fs.promises.writeFile(userDataPath, JSON.stringify(notes))
-        console.log("Notes updated");
-    } catch (error) {
-        console.log(error);
-    }
+//NEW
+async function loadFiles(){
+    console.log("Load files");
 }
 
 // Let React talk to loadNotes(), saveNewNote(), etc through IPC
 
 ipcMain.handle('load-notes', loadNotes);
+ipcMain.handle('load-files', loadFiles)
 ipcMain.handle('save-new-note', async (event, newNote) => {
     await saveNewNote(newNote);
     return newNote;
