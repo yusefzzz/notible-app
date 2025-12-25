@@ -47,6 +47,10 @@ const App = () => {
 
     const fetchFiles = async () => {
         console.log("fetch files")
+        fetchFolders()
+        fetchNotes()
+        const files: FileItem[] = [...foldersList, ...notesList]
+        setFilesList(files)
     }
 
     const addNote =  async (text: string) => {
