@@ -4,7 +4,7 @@ import Loading from './components/Loading.tsx';
 import NoteCard from './components/NoteCard.tsx';
 import SmallButton from './components/SmallButton.tsx';
 import { button, div } from 'framer-motion/client';
-import type { FileItem } from '../src/domain/FileTypes.ts'
+import type { NoteItem } from '../src/domain/FileTypes.ts'
 
 ////import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 //import reactLogo from './assets/react.svg'
@@ -17,14 +17,14 @@ const App = () => {
 
     ////const navigate = useNavigate();
 
-    const [text, setText] = useState("");
-    const [notesList, setNotesList] = useState([]);
-    const [isCreatingFolder, setIsCreatingFolder] = useState(false);
-    const [foldersList, setFoldersList] = useState([]);
-    const [filesList, setFilesList] = useState<FileItem[]>([]);
+    //const [text, setText] = useState("");
+    const [notesList, setNotesList] = useState<NoteItem[]>([]);
+    //const [isCreatingFolder, setIsCreatingFolder] = useState(false);
+    //const [foldersList, setFoldersList] = useState([]);
+    //const [filesList, setFilesList] = useState<FileItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isNoteOpen, setIsNoteOpen] = useState(false);
-    const [noteIndex, setNoteIndex] = useState(-1);
+    //const [isNoteOpen, setIsNoteOpen] = useState(false);
+    const [currentNote, setCurrentNode] = useState<string | null>(null);
 
     const fetchNotes = async () => {
         setIsLoading(true);
@@ -41,30 +41,31 @@ const App = () => {
         setIsLoading(false);
     }
 
-    const fetchFolders = async () => {
+    /*const fetchFolders = async () => {
         console.log("fetch folders")
-    }
+    }*/
 
-    const fetchFiles = async () => {
+    /*const fetchFiles = async () => {
         console.log("fetch files")
         await fetchFolders()
         await fetchNotes()
         const files: FileItem[] = [...foldersList, ...notesList]
         setFilesList(files)
         setIsLoading(false);
-    }
+    }*/
 
     const addNote =  async (text: string) => {
         const noteDate: Date = new Date();
-        const note = {
+        const newNote: NoteItem = {
+            id: crypto.randomUUID(),
+            kind: 'note',
             title: "",
-            date: noteDate.toLocaleString(),
+            createdAt: noteDate.toLocaleString(),
             content: text,
-            private: true
+            isPrivate: true
         };
         try {
-            await window.electronAPI.saveNewNote(note);
-            console.log("Note saved!");
+            await window.electronAPI.saveNewNote(newNote);
             fetchNotes();
         } catch (error) {
             console.log("ERROR OCCURRED WHILE SAVING NEW NOTE: " + error);
@@ -75,13 +76,13 @@ const App = () => {
         window.scrollTo({top: 0, behavior: 'smooth'});
         const currentNote: any = notesList[index];
         setText(currentNote.content);
-        setIsNoteOpen(true);
+        //setIsNoteOpen(true);
         setNoteIndex(index);
     }
 
     const closeNote = () => {
         setText("");
-        setIsNoteOpen(false);
+        //setIsNoteOpen(false);
         setNoteIndex(-1);
     }
 
@@ -142,21 +143,21 @@ const App = () => {
                     onKeyDown={async (e) => {
                         if (e.key === "Enter" && !e.shiftKey){
                             e.preventDefault();
-                            if (!isNoteOpen){
+                            if (noteIndex == -1){
                                 addNote(text);
                                 setText("");
-                            } else if (isNoteOpen){
+                            } else{
                                 updateNote()
                             }
                         }
                     }}
                 />
                 <div className='flex w-150 h-10 mt-2 justify-end'>
-                    {isNoteOpen && <SmallButton label='Delete' onPressed={() => deleteNote()}/>}
+                    {(noteIndex == -1) && <SmallButton label='Delete' onPressed={() => deleteNote()}/>}
                     <div className='p-1'></div>
-                    {isNoteOpen && <SmallButton label='Close' onPressed={() => closeNote()}/>}
+                    {(noteIndex == -1) && <SmallButton label='Close' onPressed={() => closeNote()}/>}
                     <div className='p-1'></div>
-                    {isNoteOpen && <SmallButton label='Save' onPressed={() => updateNote()}/>}
+                    {(noteIndex == -1) && <SmallButton label='Save' onPressed={() => updateNote()}/>}
                 </div>
             </div>
             <h1 className='flex text-3xl mb-10 mt-10 text-neutralOffWhite'>
@@ -182,11 +183,11 @@ const App = () => {
                             notesList? (
                                 notesList.map((note: any, i: number) => (
                                     <NoteCard key={i} note={{
-                                        kind: 'note',
+                                        id: note.id,
+                                        kind: note.kind,
                                         title: note.title,
-                                        date: note.date,
+                                        createdAt: note.createdAt,
                                         content: note.content,
-                                        path: note.path,
                                         isPrivate: note.private,
                                     }
                                 } onOpen={() => openNote(i)}/>

@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { NoteItem } from '../src/domain/FileTypes'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,10 +12,13 @@ const userDataPath = path.join(app.getPath('userData'), 'notes.json');
 async function loadNotes() {
     try{
         if (fs.existsSync(userDataPath)) {
-            const notes = await fs.promises.readFile(userDataPath, 'utf-8');
-            //console.log("These are the notes: " + notes)
-            if (notes) return JSON.parse(notes);
-            return []
+            const notesString = await fs.promises.readFile(userDataPath, 'utf-8');
+            if (notesString) {
+                const notes: NoteItem[] = JSON.parse(notesString);
+                console.log("These are the notes: " + notes)
+                return notes;
+            }
+            return [];
         }
         return [];
     } catch (error) {
@@ -22,11 +26,10 @@ async function loadNotes() {
     }
 }
 
-async function saveNewNote(newNote: any){
+async function saveNewNote(newNote: NoteItem){
     try{
         const olderNotes = await loadNotes();
-        //console.log("Fetches notes: " + olderNotes);
-        olderNotes.push(newNote);
+        if (olderNotes) olderNotes.push(newNote);
         await fs.promises.writeFile(userDataPath, JSON.stringify(olderNotes));
         console.log("New note saved");
     } catch (error) {
@@ -35,7 +38,7 @@ async function saveNewNote(newNote: any){
 
 }
 
-async function updateNotes(notes: any){
+async function updateNotes(notes: NoteItem[]){
     try {    
         await fs.promises.writeFile(userDataPath, JSON.stringify(notes))
         console.log("Notes updated");
@@ -45,7 +48,7 @@ async function updateNotes(notes: any){
 }
 
 //NEW
-async function createFolder(title: string){//, dir: string){
+/*async function createFolder(title: string){//, dir: string){
     try{
         //const folderr = FolderNode
         const folderPath = path.join(__dirname, title);
@@ -55,16 +58,17 @@ async function createFolder(title: string){//, dir: string){
         console.log(error);
     }
 
-}
+}*/
+
 //NEW
-async function loadFiles(){
+/*async function loadFiles(){
     console.log("Load files");
-}
+}*/
 
 // Let React talk to loadNotes(), saveNewNote(), etc through IPC
 
 ipcMain.handle('load-notes', loadNotes);
-ipcMain.handle('load-files', loadFiles)
+//ipcMain.handle('load-files', loadFiles)
 ipcMain.handle('save-new-note', async (event, newNote) => {
     await saveNewNote(newNote);
     return newNote;

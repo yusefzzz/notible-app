@@ -9,12 +9,12 @@ type NoteCardProps = {
     onOpen: (index: number) => void;
 }
 const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen }) => {
-    const {title, date, path, content, isPrivate} = note;
+    const {id, title, createdAt, content, isPrivate} = note;
     return (
         <div className='flex flex-col h-55 w-55 p-5 rounded-3xl text-neutralOffWhite bg-neutralDark'>
             <div className='flex'>
                 <h1 className='text-2xl w-30'>
-                    {date}
+                    {createdAt}
                 </h1>
                 <button className='flex items-center justify-center h-10 w-10 ml-5 text-1xl rounded-2xl hover:bg-neutralDarkest focus:outline-neutral focus:neutralDark'
                 onClick={() => onOpen(-1)}

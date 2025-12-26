@@ -7,7 +7,7 @@ type FolderCardProps = {
 }
 
 const FolderCard: React.FC<FolderCardProps> = ({ folder }) => {
-    const { title, path, children } = folder;
+    const { title, children } = folder;
     return (
         <div className='flex flex-col h-55 w-55 p-5 rounded-3xl text-neutralOffWhite bg-neutralDark'>
             <div className='flex'>

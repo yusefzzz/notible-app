@@ -1,18 +1,18 @@
 export type NoteItem = {
-    //noteID: number,
+    id: string,
     kind: 'note',
     title: string,
-    date: string,
-    path: string,
+    createdAt: string,
+    //path: string,
     content: string,
     isPrivate: boolean
 }
 
 export type FolderItem = {
-    //folderID: number,
+    id: string,
     kind: 'folder',
     title: string,
-    path: string,
+    //path: string,
     isPrivate: boolean,
     children: FileItem[]
 }
