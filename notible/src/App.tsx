@@ -33,7 +33,7 @@ const App = () => {
             notes.reverse();
             setNotesList(notes);
             console.log("Notes fetched!");
-            setIsLoading(false);
+            setIsLoading(false);//
 
         } catch (error) {
             console.log("ERROR OCCURRED WHILE FETCHING NOTES: " + error);
@@ -47,10 +47,11 @@ const App = () => {
 
     const fetchFiles = async () => {
         console.log("fetch files")
-        fetchFolders()
-        fetchNotes()
+        await fetchFolders()
+        await fetchNotes()
         const files: FileItem[] = [...foldersList, ...notesList]
         setFilesList(files)
+        setIsLoading(false);
     }
 
     const addNote =  async (text: string) => {
@@ -121,10 +122,6 @@ const App = () => {
         console.log("Create folder")
         
     }
-
-    const showFiles = async () => {
-
-    }
     
 
     useEffect(() => {
@@ -181,13 +178,15 @@ const App = () => {
 
                                 )
                             */}
-                            {/*
+                            {
                             notesList? (
                                 notesList.map((note: any, i: number) => (
                                     <NoteCard key={i} note={{
+                                        kind: 'note',
                                         title: note.title,
                                         date: note.date,
                                         content: note.content,
+                                        path: note.path,
                                         isPrivate: note.private,
                                     }
                                 } onOpen={() => openNote(i)}/>
@@ -196,7 +195,7 @@ const App = () => {
                                 <p className='text-2xl font-serif text-neutralLight'>No notes yet</p>
                             )    
                             
-                            */}
+                            }
                         </div>
                     </>
                 )}
