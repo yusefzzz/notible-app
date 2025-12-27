@@ -17,14 +17,14 @@ const App = () => {
 
     ////const navigate = useNavigate();
 
-    //const [text, setText] = useState("");
+    const [text, setText] = useState("");
     const [notesList, setNotesList] = useState<NoteItem[]>([]);
     //const [isCreatingFolder, setIsCreatingFolder] = useState(false);
     //const [foldersList, setFoldersList] = useState([]);
     //const [filesList, setFilesList] = useState<FileItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     //const [isNoteOpen, setIsNoteOpen] = useState(false);
-    const [currentNote, setCurrentNode] = useState<string | null>(null);
+    const [currentNoteId, setCurrentNoteId] = useState<string | null>(null);
 
     const fetchNotes = async () => {
         setIsLoading(true);
@@ -72,30 +72,33 @@ const App = () => {
         }
     }
 
-    const openNote = (index: number) => {
+    const openNote = (index: string) => {
         window.scrollTo({top: 0, behavior: 'smooth'});
-        const currentNote: any = notesList[index];
-        setText(currentNote.content);
+        setCurrentNoteId(index)
+        //const currentNote: NoteItem = 
+        //setText(currentNote.content);
         //setIsNoteOpen(true);
-        setNoteIndex(index);
+        //tNoteIndex(index);
     }
 
     const closeNote = () => {
-        setText("");
+        //setText("");
         //setIsNoteOpen(false);
-        setNoteIndex(-1);
+        setCurrentNoteId(null);
     }
+
+    const currentNote: NoteItem = notesList.find(note => note.id === currentNoteId) as NoteItem
 
     const updateNote = async () => {
         const notes: any = notesList;
-        const currentNote: any = notes[noteIndex];
+        //const currentNote: any = notes[noteIndex];
         const updatedNote = {
             title: "",
             date: currentNote.date,
             content: text,
             private: currentNote.isPrivate
         };
-        notes[noteIndex] = updatedNote;
+        //notes[noteIndex] = updatedNote;
         try {
             await window.electronAPI.updateNotes(notes.reverse());
             console.log('Notes updated: note changed');
@@ -153,11 +156,11 @@ const App = () => {
                     }}
                 />
                 <div className='flex w-150 h-10 mt-2 justify-end'>
-                    {(noteIndex == -1) && <SmallButton label='Delete' onPressed={() => deleteNote()}/>}
+                    {currentNoteId && <SmallButton label='Delete' onPressed={() => deleteNote()}/>}   
                     <div className='p-1'></div>
-                    {(noteIndex == -1) && <SmallButton label='Close' onPressed={() => closeNote()}/>}
+                    {currentNoteId && <SmallButton label='Close' onPressed={() => closeNote()}/>}
                     <div className='p-1'></div>
-                    {(noteIndex == -1) && <SmallButton label='Save' onPressed={() => updateNote()}/>}
+                    {currentNoteId && <SmallButton label='Save' onPressed={() => updateNote()}/>}
                 </div>
             </div>
             <h1 className='flex text-3xl mb-10 mt-10 text-neutralOffWhite'>
@@ -181,16 +184,16 @@ const App = () => {
                             */}
                             {
                             notesList? (
-                                notesList.map((note: any, i: number) => (
-                                    <NoteCard key={i} note={{
+                                notesList.map(note => (
+                                    <NoteCard note={{
                                         id: note.id,
                                         kind: note.kind,
                                         title: note.title,
                                         createdAt: note.createdAt,
                                         content: note.content,
-                                        isPrivate: note.private,
+                                        isPrivate: note.isPrivate,
                                     }
-                                } onOpen={() => openNote(i)}/>
+                                } onOpen={() => openNote(note.id)}/>
                                 ))
                             ) : (
                                 <p className='text-2xl font-serif text-neutralLight'>No notes yet</p>
