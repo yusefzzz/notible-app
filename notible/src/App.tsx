@@ -17,14 +17,22 @@ const App = () => {
 
     ////const navigate = useNavigate();
 
-    const [text, setText] = useState("");
+    const [draftText, setDraftText] = useState(""); // maybe load from last note used? (wouldn't be useState(""))
     const [notesList, setNotesList] = useState<NoteItem[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [currentNoteId, setCurrentNoteId] = useState<string | null>(null);
     //const [isCreatingFolder, setIsCreatingFolder] = useState(false);
     //const [foldersList, setFoldersList] = useState([]);
     //const [filesList, setFilesList] = useState<FileItem[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
     //const [isNoteOpen, setIsNoteOpen] = useState(false);
-    const [currentNoteId, setCurrentNoteId] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetchNotes();
+    }, []);
+
+    useEffect(() => {
+        setDraftText(currentNote?.content?? "");
+    }, [currentNoteId])
 
     const fetchNotes = async () => {
         setIsLoading(true);
@@ -61,7 +69,7 @@ const App = () => {
             kind: 'note',
             title: "",
             createdAt: noteDate.toLocaleString(),
-            content: text,
+            content: draftText,
             isPrivate: true
         };
         try {
@@ -89,13 +97,13 @@ const App = () => {
 
     const currentNote: NoteItem = notesList.find(note => note.id === currentNoteId) as NoteItem
 
-    const updateNote = async () => {
+    const updateNote = async () => {///////////////
         const notes: any = notesList;
         //const currentNote: any = notes[noteIndex];
         const updatedNote = {
             title: "",
-            date: currentNote.date,
-            content: text,
+            date: currentNote.createdAt,
+            content: draftText,
             private: currentNote.isPrivate
         };
         //notes[noteIndex] = updatedNote;
@@ -109,8 +117,8 @@ const App = () => {
     }
 
     const deleteNote = async () => {
-        const notes: any = notesList;
-        notes.splice(noteIndex, 1);
+        const notes: NoteItem[] = notesList;
+        //notes.splice(noteIndex, 1);
         try {
             await window.electronAPI.updateNotes(notes.reverse());
             console.log('Notes updated: note deleted');
@@ -126,11 +134,6 @@ const App = () => {
         console.log("Create folder")
         
     }
-    
-
-    useEffect(() => {
-        fetchNotes();
-    }, []);
 
     return (
         <div className="top-0 left-0 flex flex-col justify-center items-center w-screen min-h-screen bg-neutralDarkest">
