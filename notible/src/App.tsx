@@ -62,7 +62,7 @@ const App = () => {
         setIsLoading(false);
     }*/
 
-    const addNote =  async (text: string) => {
+    const addNote =  async () => {//text: string) => {
         const noteDate: Date = new Date();
         const newNote: NoteItem = {
             id: crypto.randomUUID(),
@@ -100,17 +100,22 @@ const App = () => {
     const updateNote = async () => {///////////////
         const notes: any = notesList;
         //const currentNote: any = notes[noteIndex];
-        const updatedNote = {
+        const updatedNote: NoteItem = {
+            id: currentNote.id,
+            kind: currentNote.kind,
             title: "",
-            date: currentNote.createdAt,
+            createdAt: currentNote.createdAt,
             content: draftText,
-            private: currentNote.isPrivate
+            isPrivate: currentNote.isPrivate
         };
+        console.log(updatedNote.content)
         //notes[noteIndex] = updatedNote;
+        ///HERE: PUSH NEW NOTE / EDIT NOTE WITHIN LIST 
         try {
             await window.electronAPI.updateNotes(notes.reverse());
             console.log('Notes updated: note changed');
             fetchNotes();
+            console.log('Notes fetched after update')
         } catch (error) {
             console.log("ERROR OCCURRED WHILE UPDATING NOTES (update note): " + error);
         }
@@ -130,10 +135,10 @@ const App = () => {
 
     }
 
-    const createFolder = async () => {
+    /*const createFolder = async () => {
         console.log("Create folder")
         
-    }
+    }*/
 
     return (
         <div className="top-0 left-0 flex flex-col justify-center items-center w-screen min-h-screen bg-neutralDarkest">
@@ -141,19 +146,20 @@ const App = () => {
             <div className='flex-col'>
                 <textarea className='w-150 h-130 p-3 border-3 rounded-3xl resize-none text-1xl border-neutral text-neutralOffWhite focus:border-neutralLight outline-none'                
                     id="main-textarea"
-                    value={text}
+                    value={draftText}
                     placeholder="What have you learnt today..."
                     onChange={(e) => {
-                        setText(e.target.value)
+                        setDraftText(e.target.value)
                     }}
                     onKeyDown={async (e) => {
                         if (e.key === "Enter" && !e.shiftKey){
                             e.preventDefault();
-                            if (noteIndex == -1){
-                                addNote(text);
-                                setText("");
+                            if (!currentNoteId){
+                                //addNote(text);
+                                addNote();
+                                setDraftText("");
                             } else{
-                                updateNote()
+                                updateNote();
                             }
                         }
                     }}
@@ -174,9 +180,9 @@ const App = () => {
                     <Loading />
                 ) : (
                     <>
-                        <div className='ml-10 mt-10'>
+                        {/*<div className='ml-10 mt-10'>
                             <SmallButton label='Create folder' onPressed={() => createFolder()}/>
-                        </div>
+                        </div>*/}
                         <div className='grid grid-cols-5 p-10 gap-5'>
                             {/*
                                 filesList? (

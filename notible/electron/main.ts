@@ -15,7 +15,10 @@ async function loadNotes() {
             const notesString = await fs.promises.readFile(userDataPath, 'utf-8');
             if (notesString) {
                 const notes: NoteItem[] = JSON.parse(notesString);
-                console.log("These are the notes: " + notes)
+                console.log("These are the notes: ");
+                for (const note of notes) {
+                    console.log(note);
+                }
                 return notes;
             }
             return [];
@@ -41,7 +44,7 @@ async function saveNewNote(newNote: NoteItem){
 async function updateNotes(notes: NoteItem[]){
     try {    
         await fs.promises.writeFile(userDataPath, JSON.stringify(notes))
-        console.log("Notes updated");
+        console.log("main.ts: Notes updated");
     } catch (error) {
         console.log(error);
     }
@@ -69,11 +72,11 @@ async function updateNotes(notes: NoteItem[]){
 
 ipcMain.handle('load-notes', loadNotes);
 //ipcMain.handle('load-files', loadFiles)
-ipcMain.handle('save-new-note', async (event, newNote) => {
+ipcMain.handle('save-new-note', async (event, newNote: NoteItem) => {
     await saveNewNote(newNote);
     return newNote;
 });
-ipcMain.handle('update-notes', async (event, notes) => {
+ipcMain.handle('update-notes', async (event, notes: NoteItem[]) => {
     await updateNotes(notes);
     return notes;
 });
