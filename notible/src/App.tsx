@@ -41,8 +41,7 @@ const App = () => {
             notes.reverse();
             setNotesList(notes);
             console.log("Notes fetched!");
-            setIsLoading(false);//
-
+            setIsLoading(false);
         } catch (error) {
             console.log("ERROR OCCURRED WHILE FETCHING NOTES: " + error);
         }
@@ -83,23 +82,21 @@ const App = () => {
     const openNote = (index: string) => {
         window.scrollTo({top: 0, behavior: 'smooth'});
         setCurrentNoteId(index)
-        //const currentNote: NoteItem = 
-        //setText(currentNote.content);
-        //setIsNoteOpen(true);
-        //tNoteIndex(index);
     }
 
     const closeNote = () => {
-        //setText("");
-        //setIsNoteOpen(false);
         setCurrentNoteId(null);
     }
 
-    const currentNote: NoteItem = notesList.find(note => note.id === currentNoteId) as NoteItem
+    const currentNote: NoteItem = notesList.find(note => note.id === currentNoteId) as NoteItem;
 
-    const updateNote = async () => {///////////////
-        const notes: any = notesList;
-        //const currentNote: any = notes[noteIndex];
+    const isDirty: boolean = draftText !== (currentNote?.content ?? "");
+
+    const updateNote = async () => {
+        if (!currentNote) return;
+
+        if (currentNote.content === draftText) return;
+
         const updatedNote: NoteItem = {
             id: currentNote.id,
             kind: currentNote.kind,
@@ -108,22 +105,30 @@ const App = () => {
             content: draftText,
             isPrivate: currentNote.isPrivate
         };
-        console.log(updatedNote.content)
-        //notes[noteIndex] = updatedNote;
-        ///HERE: PUSH NEW NOTE / EDIT NOTE WITHIN LIST 
+
+
+        //Search for original note & replace with new note
+        const notes: NoteItem[] = notesList.map(note =>
+            note.id === updatedNote.id ? updatedNote : note
+        )
+
         try {
             await window.electronAPI.updateNotes(notes.reverse());
             console.log('Notes updated: note changed');
+
             fetchNotes();
             console.log('Notes fetched after update')
         } catch (error) {
-            console.log("ERROR OCCURRED WHILE UPDATING NOTES (update note): " + error);
+            console.error(
+                "ERROR OCCURRED WHILE UPDATING NOTES (update note): ",
+                error);
         }
     }
 
     const deleteNote = async () => {
-        const notes: NoteItem[] = notesList;
-        //notes.splice(noteIndex, 1);
+        const notes: NoteItem[] = notesList.filter(note =>
+            note.id != currentNoteId
+        );
         try {
             await window.electronAPI.updateNotes(notes.reverse());
             console.log('Notes updated: note deleted');
@@ -165,11 +170,11 @@ const App = () => {
                     }}
                 />
                 <div className='flex w-150 h-10 mt-2 justify-end'>
-                    {currentNoteId && <SmallButton label='Delete' onPressed={() => deleteNote()}/>}   
+                    {currentNoteId && <SmallButton disabled = {false} label='Delete' onPressed={() => deleteNote()}/>}   
                     <div className='p-1'></div>
-                    {currentNoteId && <SmallButton label='Close' onPressed={() => closeNote()}/>}
+                    {currentNoteId && <SmallButton disabled = {false}label='Close' onPressed={() => closeNote()}/>}
                     <div className='p-1'></div>
-                    {currentNoteId && <SmallButton label='Save' onPressed={() => updateNote()}/>}
+                    {currentNoteId && <SmallButton disabled = {!isDirty} label='Save' onPressed={() => updateNote()}/>}
                 </div>
             </div>
             <h1 className='flex text-3xl mb-10 mt-10 text-neutralOffWhite'>
