@@ -5,6 +5,7 @@ import NoteCard from './components/NoteCard.tsx';
 import SmallButton from './components/SmallButton.tsx';
 import { button, div } from 'framer-motion/client';
 import type { NoteItem } from '../src/domain/FileTypes.ts'
+import { Typewriter } from 'react-simple-typewriter'
 
 ////import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 //import reactLogo from './assets/react.svg'
@@ -147,7 +148,14 @@ const App = () => {
 
     return (
         <div className="top-0 left-0 flex flex-col justify-center items-center w-screen min-h-screen bg-neutralDarkest">
-            <h1 className='font-serif text-4xl mt-10 p-10 text-center text-neutralOffWhite'>Notible</h1>
+            {/*<h1 className='font-serif text-4xl mt-10 p-10 text-center text-neutralOffWhite'>Notible</h1>*/}
+            <span className="text-neutralOffWhite min-h-[3rem] inline-flex items-center font-serif text-4xl mt-10 p-10">
+                <Typewriter
+                words = {["Notible", "nOtiBle", "NOtibLe", "noTibLE"]}
+                loop
+                typeSpeed = {80}
+                />
+            </span>
             <div className='flex-col'>
                 <textarea className='w-150 h-130 p-3 border-3 rounded-3xl resize-none text-1xl border-neutral text-neutralOffWhite focus:border-neutralLight outline-none'                
                     id="main-textarea"
