@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 
+
 @theme {
     --color-neutralDarkest: #463f3a;
     --color-neutralDark: #4F4946;
@@ -9,6 +10,9 @@
     --color-neutralAccent: #e0afa0;
 }
 
+body {
+    @apply font-sans;
+}
 /*:root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
