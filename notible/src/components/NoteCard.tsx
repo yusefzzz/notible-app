@@ -22,7 +22,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onOpen }) => {
                     <EllipsisVertical />
                 </button>
             </div>
-            <h2 className='text-1xl mt-3 line-clamp-3'>
+            <h2 className='font-light text-1xl mt-3 line-clamp-3'>
                 {content}
             </h2>
         </div>

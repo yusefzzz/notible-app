@@ -1,6 +1,10 @@
+@config "./tailwind.config.js";
+
 @import 'tailwindcss';
 
+/*@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 
+*/
 @theme {
     --color-neutralDarkest: #463f3a;
     --color-neutralDark: #4F4946;
@@ -10,9 +14,32 @@
     --color-neutralAccent: #e0afa0;
 }
 
-body {
-    @apply font-sans;
+@layer base {
+  body {
+    @apply font-primary;
+  }
 }
+/*
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background-size: 400% 400%;
+  animation: gradient-move 15s ease infinite;
+}
+*/
+/*body {
+    @apply font-sans;
+}*/
 /*:root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;

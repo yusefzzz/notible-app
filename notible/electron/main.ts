@@ -9,16 +9,21 @@ const __dirname = path.dirname(__filename);
 
 const userDataPath = path.join(app.getPath('userData'), 'notes.json');
 
+console.log(__filename);
+console.log(__dirname);
+console.log(userDataPath);
+
 async function loadNotes() {
     try{
         if (fs.existsSync(userDataPath)) {
             const notesString = await fs.promises.readFile(userDataPath, 'utf-8');
+            console.log(userDataPath)
             if (notesString) {
                 const notes: NoteItem[] = JSON.parse(notesString);
                 console.log("These are the notes: ");
-                for (const note of notes) {
+                /*for (const note of notes) {
                     console.log(note);
-                }
+                }*/
                 return notes;
             }
             return [];

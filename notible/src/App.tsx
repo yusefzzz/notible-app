@@ -148,7 +148,7 @@ const App = () => {
 
     return (
         <div className="top-0 left-0 flex flex-col justify-center items-center w-screen min-h-screen bg-neutralDarkest">
-            <h1 className='font- text-4xl mt-10 p-10 text-center text-neutralOffWhite'>Notible</h1>
+            <h1 className='font-primary font-light text-5xl mt-10 p-10 text-center text-neutralOffWhite'>notible</h1>
             {/*<span className="text-neutralOffWhite min-h-[3rem] inline-flex items-center font-serif text-4xl mt-10 p-10">
                 <Typewriter
                 words = {["Notible", "nOtiBle", "NOtibLe", "noTibLE"]}
@@ -157,7 +157,7 @@ const App = () => {
                 />
             </span>*/}
             <div className='flex-col'>
-                <textarea className='w-150 h-130 p-3 border-3 rounded-3xl resize-none text-1xl border-neutral text-neutralOffWhite focus:border-neutralLight outline-none'                
+                <textarea className='w-150 h-130 p-3 border-3 rounded-3xl resize-none text-1xl bg-neutralDark border-neutralDark text-neutralOffWhite focus:border-neutral outline-none'                
                     id="main-textarea"
                     value={draftText}
                     placeholder="What have you learnt today..."
@@ -196,7 +196,7 @@ const App = () => {
                         {/*<div className='ml-10 mt-10'>
                             <SmallButton label='Create folder' onPressed={() => createFolder()}/>
                         </div>*/}
-                        <div className='grid grid-cols-5 p-10 gap-5'>
+                        <div className='font-secondary grid grid-cols-5 p-10 gap-5'>
                             {/*
                                 filesList? (
                                     filesList.map

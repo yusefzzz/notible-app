@@ -1,15 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 
-module.exports = {
+export default {
     content: [
         "./index.html",
-        "./src/**/*.{js, jsx, ts, tsx}",
+        "./src/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Outfit', 'ui-sans-serif', 'system-ui'],
-                mono: ['Sansation', 'monospace']
+                primary: ['Urbanist', 'Outfit', 'ui-sans-serif', 'system-ui'],
+                secondary: ['Quicksand', 'Sansation', 'monospace']
             },
             /*colors: {
                 brand: {
