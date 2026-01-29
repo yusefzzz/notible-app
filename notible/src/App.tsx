@@ -156,32 +156,37 @@ const App = () => {
                 typeSpeed = {80}
                 />
             </span>*/}
-            <div className='flex-col'>
-                <textarea className='w-150 h-130 p-3 border-3 rounded-3xl resize-none text-1xl bg-neutralDark border-neutralDark text-neutralOffWhite focus:border-neutral outline-none'                
-                    id="main-textarea"
-                    value={draftText}
-                    placeholder="What have you learnt today..."
-                    onChange={(e) => {
-                        setDraftText(e.target.value)
-                    }}
-                    onKeyDown={async (e) => {
-                        if (e.key === "Enter" && !e.shiftKey){
-                            e.preventDefault();
-                            if (!currentNoteId){
-                                //addNote(text);
-                                addNote();
-                                setDraftText("");
-                            } else{
-                                updateNote();
+            {/*<div className='flex-col'>*/}
+            <div className='flex'>
+                <div className='flex-1'/>
+                <div className='flex-none'>
+                    <textarea className='w-150 h-130 p-3 border-3 rounded-3xl resize-none text-1xl bg-neutralDark border-neutralDark text-neutralOffWhite focus:border-neutral outline-none'                
+                        id="main-textarea"
+                        value={draftText}
+                        placeholder="What have you learnt today..."
+                        onChange={(e) => {
+                            setDraftText(e.target.value)
+                        }}
+                        onKeyDown={async (e) => {
+                            if (e.key === "Enter" && !e.shiftKey){
+                                e.preventDefault();
+                                if (!currentNoteId){
+                                    //addNote(text);
+                                    addNote();
+                                    setDraftText("");
+                                } else{
+                                    updateNote();
+                                }
                             }
-                        }
-                    }}
-                />
-                <div className='flex w-150 h-10 mt-2 justify-end'>
+                        }}
+                    />
+                </div>
+                {/*<div className='flex w-150 h-10 mt-2 justify-end'>*/}
+                <div className='flex-1 flex-col justify-end w-130 h-10 ml-3'>
                     {currentNoteId && <SmallButton disabled = {false} label='Delete' onPressed={() => deleteNote()}/>}   
-                    <div className='p-1'></div>
+                    <div className='p-2'></div>
                     {currentNoteId && <SmallButton disabled = {false}label='Close' onPressed={() => closeNote()}/>}
-                    <div className='p-1'></div>
+                    <div className='p-2'></div>
                     {currentNoteId && <SmallButton disabled = {!isDirty} label='Save' onPressed={() => updateNote()}/>}
                 </div>
             </div>
