@@ -20,9 +20,23 @@ async function loadNotes() {
             console.log(userDataPath)
             if (notesString) {
                 const notes: NoteItem[] = JSON.parse(notesString);
-                console.log("These are the notes: ");
-                /*for (const note of notes) {
+                /*console.log("These are the notes: ");
+                for (const note of notes) {
                     console.log(note);
+                }
+                for (let i = 0; i < notes.length; i ++){
+                    if (notes[i].id == null) {
+                        const note = notes[i];
+                        const fixedNote:  NoteItem = {
+                            id: crypto.randomUUID(),
+                            kind: 'note',
+                            title: note.title,
+                            createdAt: note.createdAt,
+                            content: note.content,
+                            isPrivate: true
+                        };
+                        notes[i] = fixedNote
+                    }
                 }*/
                 return notes;
             }
